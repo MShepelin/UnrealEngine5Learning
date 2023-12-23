@@ -19,6 +19,14 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Default", Meta = (ClampMin = "0", ClampMax = "100"))
 	int32 HealthPoints;
 
+	UFUNCTION(BlueprintCallable)
+	float GetHealthPointsCheap() const {
+		return HealthPoints;
+	}
+
+	UFUNCTION(BlueprintPure)
+	float GetHealthPointsExpensive();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

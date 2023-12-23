@@ -32,3 +32,10 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
+
+float UHealthComponent::GetHealthPointsExpensive() {
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, TEXT("Very expensive operation in pure function"));
+	}
+	return HealthPoints;
+}
