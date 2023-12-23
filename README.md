@@ -43,3 +43,9 @@ As one article elegantly states "Pure nodes are executed on demand whenever thei
 
 The GetHealthPointsExpensive function is called both before and after the value of HP is decreased. If the output was cached, this logic wouldn't work. However, because we call this function every time we need an output, it is executed twice and gives correct results.
 <img src="./pureFunction1.png" alt="pureFunction2" style="zoom:50%;" />
+
+### Bind Widgets
+
+I created a C++ class that's inherited from UUserWidget and added two pointers to UI widgets. One of them, AmmoCounter, has modifier BindWidget, the other one, AmmoImage, has modifier BindWidgetOptional. I created a BP class inherited from the C++ class and added an AmmoCounter text block. Without it, the blueprint compilation doesn't finish successfully. However, AmmoImage is optional, thus I didn't need to create this widget in BP.
+
+![bindWidget](./bindWidget.png)
