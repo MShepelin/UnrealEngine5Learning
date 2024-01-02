@@ -49,3 +49,8 @@ The GetHealthPointsExpensive function is called both before and after the value 
 I created a C++ class that's inherited from UUserWidget and added two pointers to UI widgets. One of them, AmmoCounter, has modifier BindWidget, the other one, AmmoImage, has modifier BindWidgetOptional. I created a BP class inherited from the C++ class and added an AmmoCounter text block. Without it, the blueprint compilation doesn't finish successfully. However, AmmoImage is optional, thus I didn't need to create this widget in BP.
 
 ![bindWidget](./bindWidget.png)
+
+### Enhanced Input
+
+Added "IA_ThrowGrenade" to accommodate for the mechanic of throwing a grenade.
+
