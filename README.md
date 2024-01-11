@@ -35,7 +35,7 @@ My game has basic UI and UI for pause menu. Pause mechanic also works (you can p
 
 <img src="./gameplayScreenshot2.png" alt="gameplayScreenshot2" style="zoom:33%;" />
 
-###Pure Functions
+### Pure Functions
 
 As one article elegantly states "Pure nodes are executed on demand whenever their output is required by an impure node for it to execute". I added 2 pure functions (one with const C++ modifier, another - with BlueprintPure UE modifier). Also I created a logic that can work only with pure functions:
 
@@ -54,3 +54,12 @@ I created a C++ class that's inherited from UUserWidget and added two pointers t
 
 Added "IA_ThrowGrenade" to accommodate for the mechanic of throwing a grenade.
 
+### Grenade mechanic
+
+I created a grenade mechanic which allows player to aim grenade throw while holding "IA_ThrowGrenade" and throw grenade when this button input is released.
+
+<img src="./grenadePathTrajectory.png" alt="grenadePathTrajectory" style="zoom:50%;" />
+
+<img src="./grenadeExplosion.png" alt="grenadeExplosion" style="zoom:50%;" />
+
+Grenade explosion uses a radial impulse to spread force within a radius. This force influences physics bodies and send them flying! Explosion also comes with a simple VFX from standard content.
