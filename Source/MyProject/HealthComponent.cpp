@@ -39,3 +39,19 @@ float UHealthComponent::GetHealthPointsExpensive() {
 	}
 	return HealthPoints;
 }
+
+
+void UHealthComponent::DecreaseHealth(float healthDelta) {
+	if (HealthPoints == 0)
+	{
+		return;
+	}
+
+	HealthPoints -= healthDelta;
+	if (HealthPoints <= 0)
+	{
+		HealthPoints = 0;
+		AActor* owner = GetOwner();
+		owner->Destroy();
+	}
+}

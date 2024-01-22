@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	float GetHealthPointsExpensive();
 
+	UFUNCTION(BlueprintCallable)
+	void DecreaseHealth(float healthDelta);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

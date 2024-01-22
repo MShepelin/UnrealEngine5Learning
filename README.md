@@ -62,9 +62,13 @@ I created a grenade mechanic which allows player to aim grenade throw while hold
 
 <img src="./grenadeExplosion.png" alt="grenadeExplosion" style="zoom:50%;" />
 
-Grenade explosion uses a radial impulse to spread force within a radius. This force influences physics bodies and send them flying! Explosion also comes with a simple VFX from standard content.
+Grenade explosion uses a radial impulse to spread force within a radius. This force influences physics bodies and send them flying! Explosion also comes with a simple VFX from standard content. If force is applied, objects are dealt damage.
 
 Grenades' shockwave is blocked by walls.
 <img src="./grenadeShockWaveBlock.png" alt="grenadeShockWaveBlock" style="zoom:50%;" />
 
 <img src="./grenadeShockWaveEffect.png" alt="grenadeShockWaveEffect" style="zoom:50%;" />
+
+Grenade also has a trace visualization.
+
+<img src="./grenadeTraceVizuals.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
