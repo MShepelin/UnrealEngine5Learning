@@ -69,6 +69,43 @@ Grenades' shockwave is blocked by walls.
 
 <img src="./grenadeShockWaveEffect.png" alt="grenadeShockWaveEffect" style="zoom:50%;" />
 
-Grenade also has a trace visualization.
+Grenade also has a trail visualization.
 
 <img src="./grenadeTraceVizuals.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+
+### Blueprint virtual machine
+
+To investigate how BVM (Blueprint Virtual Machine) works I read through the code and visited this two articles: [Anatomy of the Unreal 4 blueprint virtual machine](https://ikrima.dev/ue4guide/engine-programming/blueprints/bp-virtualmachine-overview/), [Discovering Blueprint VM (Part 2)](https://intaxwashere.github.io/blueprint-part-two/).
+
+BVM works in a similar way to JVM - it uses operand stack (it's not the same as the OS stack) to activate zero-address instructions. This instructions use values that are put on stack to perform a limited set of basic actions such as creating a local variable,  jumping to a place in compiled code for BVM. These instructions can be found in the Unreal Engine code in `enum EExprToken`.
+
+One of the features of BVM is stack frame. It allows to call functions, remember functions states, fetch instructions and find corresponding native function (i.e. C++ functions). Stack frames are put on the operand stack one after another (probably they follow some protocol which allows them to put function arguments in a way that can be read by the next stack frame).
+
+To go deeper into details of BVM implementation let's go to the scheme below:
+
+<img src="./bvmScheme.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+
+This scheme illustrates connections between different C++ functions and values. If we look at the bottom of this picture we can notice that opcodes are associated with UObject functions. This is interesting, looks like UObject is a unit of BVM execution, in other words - we cannot execute an instruction in a vacuum, it will always be connected to a UObject. For that reason if we want a support from BVM features we should construct our code in Unreal Engine projects based on UObject functionality, not custom C++ code and structures.
+
+<img src="./bvmOpcodeImplementationExample.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
+
+In the left bottom part you can notice a block with serialization/deserialization process.
+
+If we look at the top of the scheme we can see that `GenerateCodeForStatements` can transform terms into opcodes. It also fills `JumpTargetFixupMap` so that jump  targets (jump is a direction of the execution flow in another part of the program) can be later set after all code is generated.
+
+As I understand `GenerateCodeForStatements` is connected to the functions and classes compilation process. This process is described in a separate part of code and consists of multiple steps:
+
+- `FKismetCompilerContext::PrecompileFunction` prunes the function graph, schedules executions of each node, creates UFunction without script code
+- `FKismetCompilerContext::CompileFunction` generates executable code
+- `FKismetCompilerContext::PostcompileFunction` is called after all functions had CompileFunction called. It includes working with cross-references.
+
+These steps are all a part of `FKismetCompilerContext::CompileFunction` which contains other interesting operations. For example, it generates `LinearExecutionList` out of graph nodes that are just lists of connections and dependencies.
+
+Unreal Engine Editor (UnrealEd in code) has some useful features that are supported in BVM. For example, to operate with breakpoints there is an opcode-related function `UObject::execBreakpoint`. There is also a `FKismetDebugUtilities::OnScriptExecution` which can break execution, show script execution error message, record execution information in trace log, do something with node stepping (it's when you go inside a function called in another function that you are viewing).
+
+To conclude, BVM is a complex system that includes
+
+- compilation of functions out of blueprint graph to create operation codes
+- execution of operation codes
+- debugging functionality connected to Unreal Engine Editor
+- storing operation codes
