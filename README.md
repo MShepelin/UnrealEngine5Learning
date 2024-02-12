@@ -109,3 +109,9 @@ To conclude, BVM is a complex system that includes
 - execution of operation codes
 - debugging functionality connected to Unreal Engine Editor
 - storing operation codes
+
+### Dynamic Stairs
+
+My dynamic stairs blueprint uses construction script to create stairs with parametrized height and width between two arbitrary points. The benefit of using construction script is that you can see the results of generation right in the editor. So, every change you make will be visualized. The negative side of this approach is that runtime cost increases as the generation is not precalucated but rather computed during the game.
+
+<img src="./dynamicStairs.png" alt="grenadeTraceVizuals" style="zoom:25%;" />
