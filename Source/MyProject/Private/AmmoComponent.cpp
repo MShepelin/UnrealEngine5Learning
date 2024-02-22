@@ -49,13 +49,13 @@ void UAmmoComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 bool UAmmoComponent::TryToUseBullet()
 {
-	if (BulletCount > 0)
+	if (MyVariables::AllowInfiniteAmmo)
 	{
-		--BulletCount;
 		return true;
 	}
-	else if (MyVariables::AllowInfiniteAmmo)
+	else if (BulletCount > 0)
 	{
+		--BulletCount;
 		return true;
 	}
 	else
@@ -67,4 +67,9 @@ bool UAmmoComponent::TryToUseBullet()
 void UAmmoComponent::AddBullets(int32 Bullets)
 {
 	BulletCount += Bullets;
+}
+
+void UAmmoComponent::OverwriteBulletCount(int32 Bullets)
+{
+	BulletCount = Bullets;
 }

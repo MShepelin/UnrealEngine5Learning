@@ -116,3 +116,35 @@ My dynamic stairs blueprint uses construction script to create stairs with param
 
 <img src="./dynamicStairs.png" alt="grenadeTraceVizuals" style="zoom:25%;" />
 
+### Configs and Debug console
+
+To change game configurations I use 3 approaches:
+
+- Using FAutoConsoleVariableRef to change values from consol
+- Changing ini files (for example, DefaultGame.ini)
+- Adding functions with "exec" specifier
+
+I use FAutoConsoleVariableRef to connect Unreal Engine config system with my global C++ value. This value is checked when player tries to shoot from a gun allowing them to shoot infinitely.
+
+<img src="./configValuesInfiniteAmmo.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
+
+DefaultGame.ini is used to allow infinite health for boxes. I can edit a value from a file like this to change whether this cheat works:
+
+```ini
+[CustomVariables]
+InfiniteHealth=False
+```
+
+The last thing is exec specification for UFUNCTION that allows some classes to execute member functions when a command is printed in command line interface. I created a custom UCheatManager with a function that reloads DefaultGame.ini on fly.
+
+```C++
+UFUNCTION(exec)
+void ReloadGameConfig()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, TEXT("Reloading game config"));
+	FString fileName = GGameIni;
+	GConfig->LoadGlobalIniFile(fileName, *GGameIni, NULL, true);
+}
+```
+
+Without this function the reloading of a DefaultGame.ini requires a reloading of the whole project.

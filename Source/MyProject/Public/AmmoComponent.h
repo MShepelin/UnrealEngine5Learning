@@ -20,8 +20,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Default", Meta = (ClampMin = "0"))
-	int32 BulletCount;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Default")
+	int32 BulletCount = 0;
 
 public:	
 	// Called every frame
@@ -32,4 +32,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddBullets(int32 Bullets);
+
+	UFUNCTION(BlueprintCallable)
+	void OverwriteBulletCount(int32 Bullets);
 };

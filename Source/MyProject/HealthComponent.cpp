@@ -19,8 +19,14 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	bool isInfiniteHealthAllowed = false;
+	GConfig->GetBool(TEXT("CustomVariables"), TEXT("InfiniteHealth"), isInfiniteHealthAllowed, GGameIni);
+
+	if (isInfiniteHealthAllowed)
+	{
+		// This hack allows to avoid destroying the object when health is decreased.
+		HealthPoints = 0;
+	}
 }
 
 
