@@ -116,6 +116,14 @@ My dynamic stairs blueprint uses construction script to create stairs with param
 
 <img src="./dynamicStairs.png" alt="grenadeTraceVizuals" style="zoom:25%;" />
 
+The code below presents how the algorithm works:
+
+<img src="./dynamicStairsCodeSample0.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+
+<img src="./dynamicStairsCodeSample1.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+
+<img src="./dynamicStairsCodeSample2.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+
 ### Configs and Debug console
 
 To change game configurations I use 3 approaches:
