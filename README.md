@@ -156,3 +156,21 @@ void ReloadGameConfig()
 ```
 
 Without this function the reloading of a DefaultGame.ini requires a reloading of the whole project.
+
+### Save/Load Game
+
+UI, that we created for pause mechanic, was improved to support save and load buttons. By default, load game button is disabled, but it gets enabled once there is an available save.
+
+<img src="./saveGameDisabledLoadButton.png" style="zoom:50%;" />
+
+<img src="./saveGameEnabledLoadButton.png" style="zoom:50%;" />
+
+Loading game allows player to teleport to the location the player occupied when save button was pressed. It's just a simple transform change, but in general we can save any data and apply any logic we want to it.
+
+We use asynchronous saving and loading which means that we cannot use linear logic to enable load game button once the save button is clicked. Instead we need to use event dispatchers.
+
+Let's discuss how it works. When a save button is clicked we execute an asynchronous save operation. Once it's successfully completed, we call an event dispatcher that can be handled by HUD. This handle enables a load button allowing player to load the saved position. A similar logic works when player starts the game - we try to load the game, if it was successful we call a dispatcher, and afterwards our handle can enable the load button. The saved data is associated with a save slot name called Default.
+
+<img src="./saveGameFile.png" style="zoom:80%;" />
+
+There is also a boolean that stores whether we can enable a load button. This boolean can be accessed any time, so even if the dispatcher call was missed we can still have a load button in a valid state. This is temporal decoupling.
