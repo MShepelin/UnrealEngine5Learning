@@ -174,3 +174,11 @@ Let's discuss how it works. When a save button is clicked we execute an asynchro
 <img src="./saveGameFile.png" style="zoom:80%;" />
 
 There is also a boolean that stores whether we can enable a load button. This boolean can be accessed any time, so even if the dispatcher call was missed we can still have a load button in a valid state. This is temporal decoupling.
+
+### Visual Debugging
+
+You can use Visual Logger to log information about objects and display it visually. In this project we use it to capture locations where bullets (projectiles) hit.
+
+<img src="./visualLogger.png" style="zoom:80%;" />
+
+Locations are captured in the projectile hitting logic with a special function. These locations can be seen in a dedicated window. They can also be replayed so that developers can see how a scene changed through time. Logger's information is accessible in both editor mode and play mode.
