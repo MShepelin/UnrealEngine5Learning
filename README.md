@@ -182,3 +182,9 @@ You can use Visual Logger to log information about objects and display it visual
 <img src="./visualLogger.png" style="zoom:80%;" />
 
 Locations are captured in the projectile hitting logic with a special function. These locations can be seen in a dedicated window. They can also be replayed so that developers can see how a scene changed through time. Logger's information is accessible in both editor mode and play mode.
+
+### Data-Driven Design
+
+Unreal Engine provides a way to use tables in game which can be useful for many design goals. We use this tool to store different weapon configurations. Each weapon has a name tag and this tag name is used to set ammo count when the weapon is picked up based on data table entry.
+
+<img src="./tables.png" style="zoom:80%;" />
