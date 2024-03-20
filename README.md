@@ -199,4 +199,4 @@ I tried two ways to package the project - with "Package Project" button and "Pro
 
 <img src="./packagingWithProjectLauncher.png" style="zoom:50%;" />
 
-The game is packaged for Win64 and is ready to run in the ShippedBuild folder of the repository.
+The game was successfully packaged for Win64.
