@@ -1,6 +1,8 @@
 # Unreal Engine 5 Course
 
-That's my game on Unreal Engine 5.
+That's my journey of learning Unreal Engine 5.
+
+## Junior level
 
 ### Setup
 
@@ -188,3 +190,13 @@ Locations are captured in the projectile hitting logic with a special function. 
 Unreal Engine provides a way to use tables in game which can be useful for many design goals. We use this tool to store different weapon configurations. Each weapon has a name tag and this tag name is used to set ammo count when the weapon is picked up based on data table entry.
 
 <img src="./tables.png" style="zoom:80%;" />
+
+### Packaging
+
+I tried two ways to package the project - with "Package Project" button and "Project Launcher".
+
+<img src="./packaging.png" style="zoom:50%;" />
+
+<img src="./packagingWithProjectLauncher.png" style="zoom:50%;" />
+
+The game is packaged for Win64 and is ready to run in the ShippedBuild folder of the repository.
