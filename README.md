@@ -12,13 +12,13 @@ I used First Person Shooter template to create my project.
 
 This project uses Git VCS without LFS.
 
-<img src="./diffExample.png" alt="diffExample" style="zoom:33%;" />
+<img src="./Images/diffExample.png" alt="diffExample" style="zoom:33%;" />
 
 ### Basic Classes
 
 I changed all boxes on my level to instance a class with HP. I also added ammo pickup cubes, bullet count for the weapon.
 
-<img src="./gameplayScreenshot1.png" alt="gameplayScreenshot1" style="zoom: 33%;" />
+<img src="./Images/gameplayScreenshot1.png" alt="gameplayScreenshot1" style="zoom: 33%;" />
 
 ### Unreal Macros
 
@@ -29,28 +29,28 @@ UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Default", Meta = (Cl
 int32 HealthPoints;
 ```
 
-![healthPointsUProperty](./healthPointsUProperty.png)
+![healthPointsUProperty](./Images/healthPointsUProperty.png)
 
 ### Basic UI
 
 My game has basic UI and UI for pause menu. Pause mechanic also works (you can pause the game using "E" button).
 
-<img src="./gameplayScreenshot2.png" alt="gameplayScreenshot2" style="zoom:33%;" />
+<img src="./Images/gameplayScreenshot2.png" alt="gameplayScreenshot2" style="zoom:33%;" />
 
 ### Pure Functions
 
 As one article elegantly states "Pure nodes are executed on demand whenever their output is required by an impure node for it to execute". I added 2 pure functions (one with const C++ modifier, another - with BlueprintPure UE modifier). Also I created a logic that can work only with pure functions:
 
-<img src="./pureFunction2.png" alt="pureFunction2" style="zoom:50%;" />
+<img src="./Images/pureFunction2.png" alt="pureFunction2" style="zoom:50%;" />
 
 The GetHealthPointsExpensive function is called both before and after the value of HP is decreased. If the output was cached, this logic wouldn't work. However, because we call this function every time we need an output, it is executed twice and gives correct results.
-<img src="./pureFunction1.png" alt="pureFunction2" style="zoom:50%;" />
+<img src="./Images/pureFunction1.png" alt="pureFunction2" style="zoom:50%;" />
 
 ### Bind Widgets
 
 I created a C++ class that's inherited from UUserWidget and added two pointers to UI widgets. One of them, AmmoCounter, has modifier BindWidget, the other one, AmmoImage, has modifier BindWidgetOptional. I created a BP class inherited from the C++ class and added an AmmoCounter text block. Without it, the blueprint compilation doesn't finish successfully. However, AmmoImage is optional, thus I didn't need to create this widget in BP.
 
-![bindWidget](./bindWidget.png)
+![bindWidget](./Images/bindWidget.png)
 
 ### Enhanced Input
 
@@ -60,20 +60,20 @@ Added "IA_ThrowGrenade" to accommodate for the mechanic of throwing a grenade.
 
 I created a grenade mechanic which allows player to aim grenade throw while holding "IA_ThrowGrenade" and throw grenade when this button input is released.
 
-<img src="./grenadePathTrajectory.png" alt="grenadePathTrajectory" style="zoom:50%;" />
+<img src="./Images/grenadePathTrajectory.png" alt="grenadePathTrajectory" style="zoom:50%;" />
 
-<img src="./grenadeExplosion.png" alt="grenadeExplosion" style="zoom:50%;" />
+<img src="./Images/grenadeExplosion.png" alt="grenadeExplosion" style="zoom:50%;" />
 
 Grenade explosion uses a radial impulse to spread force within a radius. This force influences physics bodies and send them flying! Explosion also comes with a simple VFX from standard content. If force is applied, objects are dealt damage.
 
 Grenades' shockwave is blocked by walls.
-<img src="./grenadeShockWaveBlock.png" alt="grenadeShockWaveBlock" style="zoom:50%;" />
+<img src="./Images/grenadeShockWaveBlock.png" alt="grenadeShockWaveBlock" style="zoom:50%;" />
 
-<img src="./grenadeShockWaveEffect.png" alt="grenadeShockWaveEffect" style="zoom:50%;" />
+<img src="./Images/grenadeShockWaveEffect.png" alt="grenadeShockWaveEffect" style="zoom:50%;" />
 
 Grenade also has a trail visualization.
 
-<img src="./grenadeTraceVizuals.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+<img src="./Images/grenadeTraceVizuals.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
 ### Blueprint virtual machine
 
@@ -85,11 +85,11 @@ One of the features of BVM is stack frame. It allows to call functions, remember
 
 To go deeper into details of BVM implementation let's go to the scheme below:
 
-<img src="./bvmScheme.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+<img src="./Images/bvmScheme.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
 This scheme illustrates connections between different C++ functions and values. If we look at the bottom of this picture we can notice that opcodes are associated with UObject functions. This is interesting, looks like UObject is a unit of BVM execution, in other words - we cannot execute an instruction in a vacuum, it will always be connected to a UObject. For that reason if we want a support from BVM features we should construct our code in Unreal Engine projects based on UObject functionality, not custom C++ code and structures.
 
-<img src="./bvmOpcodeImplementationExample.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
+<img src="./Images/bvmOpcodeImplementationExample.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
 
 In the left bottom part you can notice a block with serialization/deserialization process.
 
@@ -116,15 +116,15 @@ To conclude, BVM is a complex system that includes
 
 My dynamic stairs blueprint uses construction script to create stairs with parametrized height and width between two arbitrary points. The benefit of using construction script is that you can see the results of generation right in the editor. So, every change you make will be visualized. The negative side of this approach is that runtime cost increases as the generation is not precalucated but rather computed during the game.
 
-<img src="./dynamicStairs.png" alt="grenadeTraceVizuals" style="zoom:25%;" />
+<img src="./Images/dynamicStairs.png" alt="grenadeTraceVizuals" style="zoom:25%;" />
 
 The code below presents how the algorithm works:
 
-<img src="./dynamicStairsCodeSample0.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+<img src="./Images/dynamicStairsCodeSample0.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
-<img src="./dynamicStairsCodeSample1.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+<img src="./Images/dynamicStairsCodeSample1.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
-<img src="./dynamicStairsCodeSample2.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
+<img src="./Images/dynamicStairsCodeSample2.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
 ### Configs and Debug console
 
@@ -136,7 +136,7 @@ To change game configurations I use 3 approaches:
 
 I use FAutoConsoleVariableRef to connect Unreal Engine config system with my global C++ value. This value is checked when player tries to shoot from a gun allowing them to shoot infinitely.
 
-<img src="./configValuesInfiniteAmmo.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
+<img src="./Images/configValuesInfiniteAmmo.png" alt="grenadeTraceVizuals" style="zoom:100%;" />
 
 DefaultGame.ini is used to allow infinite health for boxes. I can edit a value from a file like this to change whether this cheat works:
 
@@ -163,9 +163,9 @@ Without this function the reloading of a DefaultGame.ini requires a reloading of
 
 UI, that we created for pause mechanic, was improved to support save and load buttons. By default, load game button is disabled, but it gets enabled once there is an available save.
 
-<img src="./saveGameDisabledLoadButton.png" style="zoom:50%;" />
+<img src="./Images/saveGameDisabledLoadButton.png" style="zoom:50%;" />
 
-<img src="./saveGameEnabledLoadButton.png" style="zoom:50%;" />
+<img src="./Images/saveGameEnabledLoadButton.png" style="zoom:50%;" />
 
 Loading game allows player to teleport to the location the player occupied when save button was pressed. It's just a simple transform change, but in general we can save any data and apply any logic we want to it.
 
@@ -173,7 +173,7 @@ We use asynchronous saving and loading which means that we cannot use linear log
 
 Let's discuss how it works. When a save button is clicked we execute an asynchronous save operation. Once it's successfully completed, we call an event dispatcher that can be handled by HUD. This handle enables a load button allowing player to load the saved position. A similar logic works when player starts the game - we try to load the game, if it was successful we call a dispatcher, and afterwards our handle can enable the load button. The saved data is associated with a save slot name called Default.
 
-<img src="./saveGameFile.png" style="zoom:80%;" />
+<img src="./Images/saveGameFile.png" style="zoom:80%;" />
 
 There is also a boolean that stores whether we can enable a load button. This boolean can be accessed any time, so even if the dispatcher call was missed we can still have a load button in a valid state. This is temporal decoupling.
 
@@ -181,7 +181,7 @@ There is also a boolean that stores whether we can enable a load button. This bo
 
 You can use Visual Logger to log information about objects and display it visually. In this project we use it to capture locations where bullets (projectiles) hit.
 
-<img src="./visualLogger.png" style="zoom:80%;" />
+<img src="./Images/visualLogger.png" style="zoom:80%;" />
 
 Locations are captured in the projectile hitting logic with a special function. These locations can be seen in a dedicated window. They can also be replayed so that developers can see how a scene changed through time. Logger's information is accessible in both editor mode and play mode.
 
@@ -189,14 +189,14 @@ Locations are captured in the projectile hitting logic with a special function. 
 
 Unreal Engine provides a way to use tables in game which can be useful for many design goals. We use this tool to store different weapon configurations. Each weapon has a name tag and this tag name is used to set ammo count when the weapon is picked up based on data table entry.
 
-<img src="./tables.png" style="zoom:80%;" />
+<img src="./Images/tables.png" style="zoom:80%;" />
 
 ### Packaging
 
 I tried two ways to package the project - with "Package Project" button and "Project Launcher".
 
-<img src="./packaging.png" style="zoom:50%;" />
+<img src="./Images/packaging.png" style="zoom:50%;" />
 
-<img src="./packagingWithProjectLauncher.png" style="zoom:50%;" />
+<img src="./Images/packagingWithProjectLauncher.png" style="zoom:50%;" />
 
 The game was successfully packaged for Win64.
