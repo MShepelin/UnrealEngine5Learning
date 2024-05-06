@@ -12,31 +12,31 @@ class MYPROJECT_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+private:
+	// Invariant: HealthPoints is INFINITE_HEALTH or 0 or greater.
+	UPROPERTY(EditDefaultsOnly, Category = "Default", Meta = (ClampMin = "0", ClampMax = "100"))
+	int32 HealthPoints;
+
+public:
+	const int32 INFINITE_HEALTH = -1;
+
 	// Sets default values for this component's properties
 	UHealthComponent();
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Default", Meta = (ClampMin = "0", ClampMax = "100"))
-	int32 HealthPoints;
-
-	UFUNCTION(BlueprintCallable)
-	float GetHealthPointsCheap() const {
-		return HealthPoints;
-	}
-
 	UFUNCTION(BlueprintPure)
-	float GetHealthPointsExpensive();
+	int32 GetHealthPointsCheap() const;
+
+	// This function is used to test Pure function modifier in Unreal Engine. 
+	// Functionally it's the same as GetHealthPointsCheap.
+	UFUNCTION(BlueprintPure)
+	int32 GetHealthPointsExpensive();
 
 	UFUNCTION(BlueprintCallable)
-	void DecreaseHealth(float healthDelta);
+	void DecreaseHealth(int32 healthDelta);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+	void CheckIfOwnerShouldBeDestroyed();
 };
