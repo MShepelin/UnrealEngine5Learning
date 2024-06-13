@@ -200,3 +200,13 @@ I tried two ways to package the project - with "Package Project" button and "Pro
 <img src="./Images/packagingWithProjectLauncher.png" style="zoom:50%;" />
 
 The game was successfully packaged for Win64.
+
+## Medium level
+
+### Advanced Game Mechanics
+
+To implement an advanced game mechanic I chose to add a gravity mode to the existing gun. I also added UI to show which gun mode is currently used ("shooting" or "gravity changing").
+
+<img src="./Images/gravityGun.png" style="zoom:50%;" />
+
+UI works in a simple event-driven way - it listens to an event located in player character and reflects it's changes based on variables dispatched by this event. Gravity gun implementation is based on the usage of physics handle component similar to [the way described in this video](https://danny-padron09.medium.com/using-the-physics-handle-to-grab-objects-in-unreal-70ec9e5382f4). It's important to note that the way this gravity gun works is different from Half Life. Namely, the object is not rotated to face the player, instead the object is just touched by a virtual hand, so to say.
