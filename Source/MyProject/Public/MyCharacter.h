@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GrenadeThrowingAttributes.h"
 #include "AbilitySystemInterface.h"
 #include "MyCharacter.generated.h"
 
@@ -19,6 +20,9 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	UAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess))
+	const UGrenadeThrowingAttributes* GrenadeThrowingAttributes;
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
 	{

@@ -12,6 +12,7 @@ AMyCharacter::AMyCharacter()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(false);
+	AbilitySystemComponent->SetOwnerActor(this);
 }
 
 // Called when the game starts or when spawned
@@ -19,6 +20,10 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (IsValid(AbilitySystemComponent))
+	{
+		GrenadeThrowingAttributes = AbilitySystemComponent->GetSet<UGrenadeThrowingAttributes>();
+	}
 }
 
 // Called every frame
