@@ -2,9 +2,22 @@
 
 
 #include "HealthAttributes.h"
+#include "GameplayEffectExtension.h"
 
-UHealthAttributes::UHealthAttributes()
-	: IsHealthInfinite(false)
+void UHealthAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-	GConfig->GetBool(TEXT("CustomVariables"), TEXT("InfiniteHealth"), IsHealthInfinite, GGameIni);
+    Super::PostGameplayEffectExecute(Data);
+
+    if (Data.EvaluatedData.Attribute == GetHealthPointsAttribute())
+    {
+        const float NewHealth = GetHealthPoints();
+        if (NewHealth <= 0.0f)
+        {
+            AActor* ownerActor = GetOwningActor();
+            if (ensure(ownerActor))
+            {
+                ownerActor->Destroy();
+            }
+        }
+    }
 }

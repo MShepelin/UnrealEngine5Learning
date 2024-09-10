@@ -15,19 +15,11 @@ class MYPROJECT_API UHealthAttributes : public UAttributeSet
 	GENERATED_BODY()
 
 public:
-	UHealthAttributes();
+	UHealthAttributes() = default;
 
-	UFUNCTION(BlueprintCallable)
-	bool HasInfiniteHealth() const
-	{
-		return IsHealthInfinite;
-	}
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FGameplayAttributeData HealthPoints;
 	ATTRIBUTE_ACCESSORS(UHealthAttributes, HealthPoints)
-
-private:
-	UPROPERTY()
-	bool IsHealthInfinite;
 };
