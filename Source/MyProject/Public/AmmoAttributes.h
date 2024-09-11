@@ -15,6 +15,8 @@ class MYPROJECT_API UAmmoAttributes : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
+	UAmmoAttributes() = default;
+
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FGameplayAttributeData BulletCount;
 	ATTRIBUTE_ACCESSORS(UAmmoAttributes, BulletCount)
