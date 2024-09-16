@@ -210,3 +210,22 @@ To implement an advanced game mechanic I chose to add a gravity mode to the exis
 <img src="./Images/gravityGun.png" style="zoom:50%;" />
 
 UI was implemented in a simple event-driven way - it listened to an event located in player character and reflected it's changes based on variables dispatched by this event. Gravity gun implementation was based on the usage of physics handle component similar to [the way described in this video](https://danny-padron09.medium.com/using-the-physics-handle-to-grab-objects-in-unreal-70ec9e5382f4). It's important to note that the way this gravity gun was designed was different from Half Life. Namely, the object was not rotated to face the player, instead the object was just touched by a virtual hand, so to say.
+
+### Gameplay Ability System
+
+GAS is a plugin that contains a framework that can be used to implement gameplay abilities and gameplay attributes. It's useful for RPGs, MOBAs and other games that have a lot of characters, abilities and character attributes that can get mixed in a very complicated way. GAS streamlines the process of introducing new mechanics by providing primitives like Gameplay Ability, Attribute Set, Gameplay Effect, Tags.
+
+I moved several mechanics to GAS to see how this plugin can help the game to be more scalable. At first, I added Ability System Component to the player character class. Then, I moved grenade logic to a Gameplay Ability class. This logic required a value of grenade velocity to be determined by an ability owner. Therefore, I created a new Attribute Set that contained this velocity. This velocity was set from a table with attributes data.
+
+Afterwards, I wanted to move ammo and health computation to GAS. I moved these values to new Attribute Sets and several Gameplay Effects:
+
+- GE_UseBullet just reduced the number of bullets by 1 if it was possible. This effect required a class inherited from GameplayModMagnitudeCalculation to support an option to enable infinite ammo.
+- GE_DecreaseHealth reduced the health by a fixed number and supported an infinite health option.
+- GE_AddBullets added a custom amount of bullets to ammo. Thanks to a special setting, the magnitude of ammo change was set by effect caller.
+
+Finally, I moved the gravity gun trace logic (that allowed player to grab the first physics object that met on the way) to a Gameplay Ability. The transition was similar to the grenade logic transition. It involved adding an Attribute Set with current gravity gun distance and a Gameplay Effect to set this attribute depending on trace results.
+
+<img src="./Images/gameplayabilitysystem.png" style="zoom:100%;" />
+
+I noticed that GAS is quite flexible, it can be used together with standard UE encapsulation techniques: actor components, scene components, interfaces, etc. 
+
