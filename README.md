@@ -229,3 +229,4 @@ Finally, I moved the gravity gun trace logic (that allowed player to grab the fi
 
 I noticed that GAS is quite flexible, it can be used together with standard UE encapsulation techniques: actor components, scene components, interfaces, etc. 
 
+Afterwards, I also added health regeneration for cubes using gameplay effect with Infinite Duration Policy. To ensure cubes' health doesn't reach infinity I added a new attribute to health attribute set to set max health. Although AttributesTable has a Max Value column, it's actually not read during ability system component setup, so I had to add a new variable.
