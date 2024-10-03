@@ -22,4 +22,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FGameplayAttributeData HealthPoints;
 	ATTRIBUTE_ACCESSORS(UHealthAttributes, HealthPoints)
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	FGameplayAttributeData MaxHealthPoints;
+	ATTRIBUTE_ACCESSORS(UHealthAttributes, MaxHealthPoints)
 };
