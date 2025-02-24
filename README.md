@@ -230,3 +230,8 @@ Finally, I moved the gravity gun trace logic (that allowed player to grab the fi
 I noticed that GAS is quite flexible, it can be used together with standard UE encapsulation techniques: actor components, scene components, interfaces, etc. 
 
 Afterwards, I also added health regeneration for cubes using gameplay effect with Infinite Duration Policy. To ensure cubes' health doesn't reach infinity I added a new attribute to health attribute set to set max health. Although AttributesTable has a Max Value column, it's actually not read during ability system component setup, so I had to add a new variable.
+
+### Plugin Development
+
+I created a small plugin to encapsulate Dynamic Stairs implementation. The challenging part was moving the blueprint file to the plugin and updating it's references in the level. I used Migrate function to copy Dynamic Stairs with all the dependencies (they include a material file and a cube mesh), Delete function to replace all references of the blueprint and delete the bp file itself, and finally Fix Up Redirections to clear ghost-file of a blueprint file.
+
