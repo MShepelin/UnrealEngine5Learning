@@ -235,3 +235,12 @@ Afterwards, I also added health regeneration for cubes using gameplay effect wit
 
 I created a small plugin to encapsulate Dynamic Stairs implementation. The challenging part was moving the blueprint file to the plugin and updating it's references in the level. I used Migrate function to copy Dynamic Stairs with all the dependencies (they include a material file and a cube mesh), Delete function to replace all references of the blueprint and delete the bp file itself, and finally Fix Up Redirections to clear ghost-file of a blueprint file.
 
+### Asynchronous Loading
+
+I imported an asset using Fab plugin and created a new blueprint with a soft reference to a static mesh.
+
+<img src="./Images/softAssetReference.jpg" style="zoom:100%;" />
+
+<img src="./Images/softAssetReferenceBlueprint.jpg" style="zoom:100%;" />
+
+This soft reference doesn't cause mesh to be loaded together with an actor, instead an async operation can be used to load this asset.
