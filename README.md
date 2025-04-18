@@ -244,3 +244,9 @@ I imported an asset using Fab plugin and created a new blueprint with a soft ref
 <img src="./Images/softAssetReferenceBlueprint.jpg" style="zoom:100%;" />
 
 This soft reference doesn't cause mesh to be loaded together with an actor, instead an async operation can be used to load this asset.
+
+###Editor Extension
+
+Created a simple editor extension that allows user to spawn a sphere with a given scale. The sphere is spawned in front of the first viewport camera according to the distance set in the tool. The menu UI was described using slate widgets (vertical box, numerical entry box, etc).
+
+<img src="./Images/editorExtension.png" style="zoom:100%;" /> 
