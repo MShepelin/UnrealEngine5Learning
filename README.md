@@ -250,3 +250,9 @@ This soft reference doesn't cause mesh to be loaded together with an actor, inst
 Created a simple editor extension that allows user to spawn a sphere with a given scale. The sphere is spawned in front of the first viewport camera according to the distance set in the tool. The menu UI was described using slate widgets (vertical box, numerical entry box, etc).
 
 <img src="./Images/editorExtension.png" style="zoom:100%;" /> 
+
+### Steam Subsystem
+
+Added Steam subsystem to make the game publishable on Steam and make other Steam features available.
+
+<img src="./Images/steamSubsystem.png" style="zoom:50%;" />
