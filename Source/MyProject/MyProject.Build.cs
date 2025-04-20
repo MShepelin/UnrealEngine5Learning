@@ -10,7 +10,7 @@ public class MyProject : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks", "ImageWrapper" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks", "ImageWrapper", "HTTP" });
 
         PrivateIncludePaths.Add("C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Source\\Runtime\\ImageWrapper\\Public");
 
