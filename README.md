@@ -245,7 +245,7 @@ I imported an asset using Fab plugin and created a new blueprint with a soft ref
 
 This soft reference doesn't cause mesh to be loaded together with an actor, instead an async operation can be used to load this asset.
 
-###Editor Extension
+### Editor Extension
 
 Created a simple editor extension that allows user to spawn a sphere with a given scale. The sphere is spawned in front of the first viewport camera according to the distance set in the tool. The menu UI was described using slate widgets (vertical box, numerical entry box, etc).
 
@@ -256,3 +256,11 @@ Created a simple editor extension that allows user to spawn a sphere with a give
 Added Steam subsystem to make the game publishable on Steam and make other Steam features available.
 
 <img src="./Images/steamSubsystem.png" style="zoom:50%;" />
+
+### Downloading an image from Web and using it as texture
+
+Created a blueprint node based on UBlueprintAsyncActionBase that requested an image based on given [http address](https://static.wikia.nocookie.net/mike-emil-game-and-video/images/9/91/GabeNewell2022.png). This node performed an http request and generated a texture during response processing (by decoding data from the response content). It included a Completed output pin so that blueprint user could describe what happens after url response is processed. I created a material with a texture as a parameter and used this material to create a material instance and applied it to a plane (with a generated texture passed as a parameter).
+
+<img src="./Images/webImageTexture.png" style="zoom:100%;" />
+
+<img src="./Images/webImageTextureLogic.png" style="zoom:50%;" />
