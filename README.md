@@ -264,3 +264,9 @@ Created a blueprint node based on UBlueprintAsyncActionBase that requested an im
 <img src="./Images/webImageTexture.png" style="zoom:100%;" />
 
 <img src="./Images/webImageTextureLogic.png" style="zoom:50%;" />
+
+### Simple AI
+
+Added a simple NPC that followed the player until it reached him at a certain distance. It used AIMoveTo functionality to move (I also added nav mesh to the level). New NPC used GAS component to support health attribute (which already supported actor destruction). As a funny side effect, it appeared that NPC was destroying ammo pickups when it passed nearby (because of the way ammo pickup interacts with actors that have GAS component).
+
+<img src="./Images/basicAI.png" style="zoom:100%;" />
