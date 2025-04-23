@@ -270,3 +270,9 @@ Created a blueprint node based on UBlueprintAsyncActionBase that requested an im
 Added a simple NPC that followed the player until it reached him at a certain distance. It used AIMoveTo functionality to move (I also added nav mesh to the level). New NPC used GAS component to support health attribute (which already supported actor destruction). As a funny side effect, it appeared that NPC was destroying ammo pickups when it passed nearby (because of the way ammo pickup interacts with actors that have GAS component).
 
 <img src="./Images/basicAI.png" style="zoom:100%;" />
+
+### Minimap
+
+Added a simple minimap with orthogonal view. It allowed user to see surroundings without moving the camera. To add it I followed [this guide](https://www.youtube.com/watch?v=VzFAujhMdEA): attached a SceneCaptureComponent2D to the player character, created a render target to use in a new material, and applied this material to an image in new UI element.
+
+<img src="./Images/minimap.png" style="zoom:100%;" />
