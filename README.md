@@ -1,8 +1,41 @@
-# Unreal Engine 5 Course
+# Unreal Engine 5 Learning
 
-That's my journey of learning Unreal Engine 5. Each chapter is linked to a task from the roadmap I follow and contains a brief description of the way I tackled that task.
+In this repository I share my journey of learning Unreal Engine 5. Each chapter is linked to a task from the roadmap I follow and contains a brief description of the way I tackled that task.
 
-## Junior level
+The roadmap consists of different tasks such as [Gameplay Ability System](#gameplay-ability-system), [Blueprint Virtual Machine](#blueprint-virtual-machine), [Web Image as Texture](#web-image-as-texture), [Custom Delay Node](#custom-delay-node), [Grenade Mechanic](#grenade-mechanic), and is presented in the chronological order (starting from [Setup](#setup)).
+
+<img src="./Images/repoLogo.png" alt="diffExample" style="zoom:100%;" />
+
+### Table of Contents
+
+- [Setup](#setup)
+- [Version Control](#version-control)
+- [Basic Classes](#basic-classes)
+- [Unreal Macros](#unreal-macros)
+- [Basic UI](#basic-ui)
+- [Pure Functions](#pure-functions)
+- [Bind Widgets](#bind-widgets)
+- [Enhanced Input](#enhanced-input)
+- [Grenade Mechanic](#grenade-mechanic)
+- [Blueprint Virtual Machine](#blueprint-virtual-machine)
+- [Dynamic Stairs](#dynamic-stairs)
+- [Configs and Debug Console](#configs-and-debug-console)
+- [Save/Load Game](#save/load-game)
+- [Visual Debugging](#visual-debugging)
+- [Data-Driven Design](#data-driven-design)
+- [Packaging](#packaging)
+- [Advanced Game Mechanics](#advanced-game-mechanics)
+- [Gameplay Ability System](#gameplay-ability-system)
+- [Plugin Development](#plugin-development)
+- [Asynchronous Loading](#asynchronous-loading)
+- [Editor Extension](#editor-extension)
+- [Steam Subsystem](#steam-subsystem)
+- [Web Image as Texture](#web-image-as-texture)
+- [Simple AI](#simple-ai)
+- [Minimap](#minimap)
+- [Custom Delay Node](#custom-delay-node)
+
+## Roadmap
 
 ### Setup
 
@@ -56,7 +89,7 @@ I created a C++ class that's inherited from UUserWidget and added two pointers t
 
 Added "IA_ThrowGrenade" to accommodate for the mechanic of throwing a grenade.
 
-### Grenade mechanic
+### Grenade Mechanic
 
 I created a grenade mechanic which allowed player to aim grenade throw while holding "IA_ThrowGrenade" and throw grenade when this button input was released.
 
@@ -64,9 +97,8 @@ I created a grenade mechanic which allowed player to aim grenade throw while hol
 
 <img src="./Images/grenadeExplosion.png" alt="grenadeExplosion" style="zoom:50%;" />
 
-Grenade explosion used a radial impulse to spread force within a radius. This force influenced physics bodies and sent them flying! Explosion also came with a simple VFX based on standard content. If force was applied, objects were dealt damage.
+Grenade explosion used a radial impulse to spread force within a radius. This force influenced physics bodies and sent them flying! Explosion also came with a simple VFX based on standard content. If force was applied, objects were dealt damage. Grenades' shockwave was blocked by walls.
 
-Grenades' shockwave was blocked by walls.
 <img src="./Images/grenadeShockWaveBlock.png" alt="grenadeShockWaveBlock" style="zoom:50%;" />
 
 <img src="./Images/grenadeShockWaveEffect.png" alt="grenadeShockWaveEffect" style="zoom:50%;" />
@@ -75,7 +107,7 @@ Grenade trail visualization was added afterwards:
 
 <img src="./Images/grenadeTraceVizuals.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
-### Blueprint virtual machine
+### Blueprint Virtual Machine
 
 To investigate how BVM (Blueprint Virtual Machine) works I read through the code and visited these two articles: [Anatomy of the Unreal 4 blueprint virtual machine](https://ikrima.dev/ue4guide/engine-programming/blueprints/bp-virtualmachine-overview/), [Discovering Blueprint VM (Part 2)](https://intaxwashere.github.io/blueprint-part-two/).
 
@@ -126,7 +158,7 @@ The code below presents the algorithm implementation:
 
 <img src="./Images/dynamicStairsCodeSample2.png" alt="grenadeTraceVizuals" style="zoom:50%;" />
 
-### Configs and Debug console
+### Configs and Debug Console
 
 To change game configurations I used 3 approaches:
 
@@ -201,8 +233,6 @@ I tried two ways of packaging the project - "Package Project" button and "Projec
 
 The game was successfully packaged for Win64.
 
-## Middle level
-
 ### Advanced Game Mechanics
 
 To implement an advanced game mechanic I chose to add a gravity mode to the existing gun. I also added UI to show which gun mode was used ("shooting" or "gravity changing").
@@ -257,7 +287,7 @@ Added Steam subsystem to make the game publishable on Steam and make other Steam
 
 <img src="./Images/steamSubsystem.png" style="zoom:50%;" />
 
-### Downloading an image from Web and using it as texture
+### Web Image as Texture
 
 Created a blueprint node based on UBlueprintAsyncActionBase that requested an image based on given [http address](https://static.wikia.nocookie.net/mike-emil-game-and-video/images/9/91/GabeNewell2022.png). This node performed an http request and generated a texture during response processing (by decoding data from the response content). It included a Completed output pin so that blueprint user could describe what happens after url response is processed. I created a material with a texture as a parameter and used this material to create a material instance and applied it to a plane (with a generated texture passed as a parameter).
 
@@ -276,8 +306,6 @@ Added a simple NPC that followed the player until it reached him at a certain di
 Added a simple minimap with orthogonal view. It allowed user to see surroundings without moving the camera. To add it I followed [this guide](https://www.youtube.com/watch?v=VzFAujhMdEA): attached a SceneCaptureComponent2D to the player character, created a render target to use in a new material, and applied this material to an image in new UI element.
 
 <img src="./Images/minimap.png" style="zoom:100%;" />
-
-# Senior level
 
 ### Custom Delay Node
 
