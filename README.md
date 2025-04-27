@@ -276,3 +276,15 @@ Added a simple NPC that followed the player until it reached him at a certain di
 Added a simple minimap with orthogonal view. It allowed user to see surroundings without moving the camera. To add it I followed [this guide](https://www.youtube.com/watch?v=VzFAujhMdEA): attached a SceneCaptureComponent2D to the player character, created a render target to use in a new material, and applied this material to an image in new UI element.
 
 <img src="./Images/minimap.png" style="zoom:100%;" />
+
+# Senior level
+
+### Custom Delay Node
+
+Created a custom delay node that stopped blueprint execution chain and continued it after a specific input action was triggered and a delay with a specific d. To create an example of how this node can be used, I created an actor object for a distant explosive. This explosive has a BeginPlay logic that waits for an input action, and creates an explosion after a second from user's action is taken. To implement this node I used a Latent UFUNCTION modifer, FPendingLatentAction and enhanced input component (which allows to bind functions to input actions).
+
+<img src="./Images/customDelayNode.png" style="zoom:100%;" />
+
+<img src="./Images/distantExplosive.png" style="zoom:100%;" />
+
+Let's get into some details of how this node implementation. When the node (representation of a static function) is executed, a new pending latent action is created. LatentManager updates this action regularly and provides delta time that is used to decrease local timer. When the timer reaches 0, the execution flow is continued. The timer is locked by default. To wait for the user's input, a new UInputWaiter uobject is created alongside the pending latent action. This uobject just binds a member function to the input action trigger. This member function searches for a pending latent action and unblocks the timer. So, the latent pending action exists independently from the input component, but the input component's input event unlocks a timer inside the action, leading to a delayed logic continuation.
