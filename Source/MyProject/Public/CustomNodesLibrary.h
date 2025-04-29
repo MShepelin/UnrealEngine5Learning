@@ -29,4 +29,8 @@ class MYPROJECT_API UCustomNodesLibrary : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, meta=(Latent, LatentInfo="LatentInfo"))
 	static void CustomDelay(APlayerController* Controller, UInputAction* InputAction, float Duration, FLatentActionInfo LatentInfo);
+
+    UFUNCTION(BlueprintCallable, CustomThunk, meta = (CustomStructureParam = "OutValue"))
+    static void GetObjectProperty(UObject* Target, FName PropertyName, int32& OutValue);
+    DECLARE_FUNCTION(execGetObjectProperty);
 };
