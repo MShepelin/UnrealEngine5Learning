@@ -34,6 +34,7 @@ The roadmap consists of different tasks such as [Gameplay Ability System](#gamep
 - [Simple AI](#simple-ai)
 - [Minimap](#minimap)
 - [Custom Delay Node](#custom-delay-node)
+- [Advanced Custom Node with Stack Operations](#advanced-custom-node-with-stack-operations)
 
 ## Roadmap
 
@@ -316,3 +317,18 @@ Created a custom delay node that stopped blueprint execution chain and continued
 <img src="./Images/distantExplosive.png" style="zoom:100%;" />
 
 Let's get into some details of how this node implementation. When the node (representation of a static function) is executed, a new pending latent action is created. LatentManager updates this action regularly and provides delta time that is used to decrease local timer. When the timer reaches 0, the execution flow is continued. The timer is locked by default. To wait for the user's input, a new UInputWaiter uobject is created alongside the pending latent action. This uobject just binds a member function to the input action trigger. This member function searches for a pending latent action and unblocks the timer. So, the latent pending action exists independently from the input component, but the input component's input event unlocks a timer inside the action, leading to a delayed logic continuation.
+
+### Advanced Custom Node with Stack Operations
+
+The next thing I implemented was a custom blueprint node that can get a property of an uobject and return it. The node itself accepted a name of the property and a uobject pointer. Here is how it looked:
+
+<img src="./Images/objectPropertyNode.png" style="zoom:100%;" />
+
+The challenge of implementing such node was in adding a wildcard output, that can be attached to any type of data (primitives like integers and booleans, arrays, actor references, etc).
+
+<img src="./Images/objectPropertyNodeInt64.png" style="zoom:100%;" />
+
+<img src="./Images/objectPropertyNodeArray.png" style="zoom:60%;" />
+
+To develop this node I created a function with a CustomThunk specifier and a CustomStructureParam meta specifier. I implemented exec... function that describes the logic of the node. Since this way of implementing a UFUNCTION allows to access stack code, stack MostRecentPropertyAddress and MostRecentProperty, I used this opportunity to copy a property from a Target uobject into a memory allocated for an output data. My implementation included parameters validation, comparison between allocated memory size and property size.
+
