@@ -18,12 +18,20 @@ public:
 	UHealthAttributes() = default;
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = OnRep_HealthPoints)
 	FGameplayAttributeData HealthPoints;
 	ATTRIBUTE_ACCESSORS(UHealthAttributes, HealthPoints)
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = OnRep_MaxHealthPoints)
 	FGameplayAttributeData MaxHealthPoints;
 	ATTRIBUTE_ACCESSORS(UHealthAttributes, MaxHealthPoints)
+
+protected:
+	UFUNCTION()
+	virtual void OnRep_HealthPoints(const FGameplayAttributeData& OldHealthPoints);
+
+	UFUNCTION()
+	virtual void OnRep_MaxHealthPoints(const FGameplayAttributeData& OldMaxHealthPoints);
 };

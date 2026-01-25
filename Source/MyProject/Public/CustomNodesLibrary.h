@@ -33,4 +33,7 @@ public:
     UFUNCTION(BlueprintCallable, CustomThunk, meta = (CustomStructureParam = "OutValue"))
     static void GetObjectProperty(UObject* Target, FName PropertyName, int32& OutValue);
     DECLARE_FUNCTION(execGetObjectProperty);
+
+    UFUNCTION(BlueprintCallable)
+    static void InitializeGASComponent(AActor* Actor);
 };

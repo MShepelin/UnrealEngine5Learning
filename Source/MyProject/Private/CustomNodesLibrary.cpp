@@ -3,6 +3,7 @@
 
 #include "CustomNodesLibrary.h"
 #include "EnhancedInputComponent.h"
+#include "AbilitySystemComponent.h"
 
 class FCustomDelayAction : public FPendingLatentAction
 {
@@ -163,4 +164,17 @@ DEFINE_FUNCTION(UCustomNodesLibrary::execGetObjectProperty)
 void UCustomNodesLibrary::GetObjectProperty(UObject* Target, FName PropertyName, int32& OutValue)
 {
     checkNoEntry();
+}
+
+void UCustomNodesLibrary::InitializeGASComponent(AActor* Actor)
+{
+    UAbilitySystemComponent* GASComponent = Actor->GetComponentByClass<UAbilitySystemComponent>();
+    if (GASComponent)
+    {
+        GASComponent->InitAbilityActorInfo(Actor, Actor);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("InitializeGASComponent node: the Actor doesn't have GAS component"));
+    }
 }
