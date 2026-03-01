@@ -34,9 +34,9 @@ public:
 	void AddConqueringPoint();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, ReplicatedUsing = OnRep_ConquerringPoints)
-	FConqueringData ConqueringData;
+	FConqueringData ConqueringStatus;
 
 private:
 	UFUNCTION()
-	virtual void OnRep_ConquerringPoints(FConqueringData OldConqueringData);
+	virtual void OnRep_ConquerringPoints(FConqueringData OldConqueringStatus);
 };

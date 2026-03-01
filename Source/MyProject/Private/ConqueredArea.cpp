@@ -18,7 +18,7 @@ void AConqueredArea::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	OnConquerringPointsChanged(ConqueringData.ConquerringPoints, ConqueringData.ConquerringMaxPoints);
+	OnConquerringPointsChanged(ConqueringStatus.ConquerringPoints, ConqueringStatus.ConquerringMaxPoints);
 }
 
 // Called every frame
@@ -32,21 +32,21 @@ void AConqueredArea::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AConqueredArea, ConqueringData);
+	DOREPLIFETIME(AConqueredArea, ConqueringStatus);
 }
 
 void AConqueredArea::AddConqueringPoint()
 {
-	if (HasAuthority() && ConqueringData.ConquerringPoints < ConqueringData.ConquerringMaxPoints)
+	if (HasAuthority() && ConqueringStatus.ConquerringPoints < ConqueringStatus.ConquerringMaxPoints)
 	{
-		++ConqueringData.ConquerringPoints;
-		OnConquerringPointsChanged(ConqueringData.ConquerringPoints, ConqueringData.ConquerringMaxPoints);
+		++ConqueringStatus.ConquerringPoints;
+		OnConquerringPointsChanged(ConqueringStatus.ConquerringPoints, ConqueringStatus.ConquerringMaxPoints);
 	}
 }
 
-void AConqueredArea::OnRep_ConquerringPoints(FConqueringData OldConqueringData)
+void AConqueredArea::OnRep_ConquerringPoints(FConqueringData OldConqueringStatus)
 {
-	OnConquerringPointsChanged(ConqueringData.ConquerringPoints, ConqueringData.ConquerringMaxPoints);
+	OnConquerringPointsChanged(ConqueringStatus.ConquerringPoints, ConqueringStatus.ConquerringMaxPoints);
 }
 
 void AConqueredArea::OnConquerringPointsChanged_Implementation(int NewConquerringPoints, int MaxConquerringPoints)
