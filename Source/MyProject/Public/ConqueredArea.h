@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ConqueringData.h"
 #include "ConqueredArea.generated.h"
 
 UCLASS()
@@ -32,15 +33,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddConqueringPoint();
 
-
-	UPROPERTY(ReplicatedUsing = OnRep_ConquerringPoints)
-	int ConquerringPoints = 0;
-
-	// This value should be defined in defaults of the class
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	int ConquerringMaxPoints = 10;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, ReplicatedUsing = OnRep_ConquerringPoints)
+	FConqueringData ConqueringData;
 
 private:
 	UFUNCTION()
-	virtual void OnRep_ConquerringPoints(int OldConquerringPoints);
+	virtual void OnRep_ConquerringPoints(FConqueringData OldConqueringData);
 };
