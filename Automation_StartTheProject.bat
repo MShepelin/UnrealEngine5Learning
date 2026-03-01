@@ -1,0 +1,1 @@
+"C:/Program Files/Epic Games/UE_5.3/Engine/Binaries/Win64/UnrealEditor.exe" %~dp0MyProject.uproject -ExecutePythonScript="Automation_RunTheGame.py -bps -d 10"

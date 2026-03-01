@@ -1,6 +1,5 @@
 import unreal
 import time
-import threading
 import argparse
 
 
@@ -23,7 +22,7 @@ if __name__ == "__main__":
     # 2. Compile all Blueprints
     # -----------------------------
 
-    if (perform_blueprints_compilation):
+    if perform_blueprints_compilation:
         print("Compiling all Blueprints...")
 
         blueprints = []
@@ -50,10 +49,21 @@ if __name__ == "__main__":
     # ----------------------
     # 4. End game session
     # ----------------------
+    
+    unreal.EditorPythonScripting.set_keep_python_script_alive(True)
 
-    def delayed_action():
-        print("Ending the game session...")
-        unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).editor_request_end_play()
+    class WaitingObject:
+        def __init__(self, waiting_duration):
+            self.waiting_duration = waiting_duration
+            self.waiting_start = time.time()
+            self.waiting_handle = unreal.register_slate_pre_tick_callback(self.tick)
+            
+        def tick(self, delta_time):
+            if time.time() - self.waiting_start > self.waiting_duration:
+                unreal.log("Ending the game session...")
+                unreal.EditorPythonScripting.set_keep_python_script_alive(False)
+                unreal.unregister_slate_pre_tick_callback(self.waiting_handle)
+                unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).editor_request_end_play()
+                unreal.SystemLibrary.quit_editor()
 
-    timer = threading.Timer(10.0, delayed_action)
-    timer.start()
+    waiting_object = WaitingObject(session_duration)
