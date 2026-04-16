@@ -10,6 +10,8 @@ public class MyProjectTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V4;
 
+		bUsesSteam = true;
+
 		ExtraModuleNames.AddRange( new string[] { "MyProject" } );
 	}
 }
