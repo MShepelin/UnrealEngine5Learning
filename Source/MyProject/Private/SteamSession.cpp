@@ -15,6 +15,19 @@ USteamSessionSubsystem::USteamSessionSubsystem()
         SessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &USteamSessionSubsystem::OnJoinSessionComplete);
         SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &USteamSessionSubsystem::OnDestroySessionComplete);
     }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Online subsystem was nullptr"));
+    }
+
+    // Log which online settings are used
+    FString NetDriverName;
+    GConfig->GetString(TEXT("/Script/OnlineSubsystemUtils.IpNetDriver"), TEXT("NetConnectionClassName"), NetDriverName, GEngineIni);
+    UE_LOG(LogTemp, Log, TEXT("[USteamSessionSubsystem] Net Driver name is [%s]"), *NetDriverName);
+
+    FString OnlineSubsystemName;
+    GConfig->GetString(TEXT("/Script/Engine.OnlineSubsystem"), TEXT("DefaultPlatformService"), OnlineSubsystemName, GEngineIni);
+    UE_LOG(LogTemp, Log, TEXT("[USteamSessionSubsystem] Subsystem name is [%s]"), *OnlineSubsystemName);
 }
 
 void USteamSessionSubsystem::CreateSteamLobby(int32 MaxPlayers, FString LobbyName, bool IsLAN)
