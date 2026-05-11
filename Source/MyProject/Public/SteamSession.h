@@ -84,4 +84,6 @@ private:
 
     // Constant for filtering
     const FString LOBBY_GAMEMODE = "SuperDeathmatch";
+    const FString LOBBY_MAP_NAME = "LobbyMap";
+    const FString HUB_MAP_NAME = "PlayerHub";
 };

@@ -48,6 +48,7 @@ void USteamSessionSubsystem::CreateSteamLobby(int32 MaxPlayers, FString LobbyNam
 
     SessionSettings.Set(SETTING_MAPNAME, LobbyName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
     SessionSettings.Set(SETTING_GAMEMODE, LOBBY_GAMEMODE, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+    SessionSettings.Set(SETTING_CUSTOM, LOBBY_MAP_NAME, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
     
     const ULocalPlayer* LC = GetWorld()->GetFirstLocalPlayerFromController();
     if (LC)
@@ -167,12 +168,63 @@ void USteamSessionSubsystem::DestroySteamLobby()
 
 void USteamSessionSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
 {
+    // Firstly, trigger all client logic
     OnDestroySessionCompleteDelegate.Broadcast(bWasSuccessful);
+
+    // Then, do several validation checks and start a level transition back to the hub
+    if (!bWasSuccessful)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Failed to destroy a session"));
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (World)
+    {
+        UGameplayStatics::OpenLevel(GetWorld(), FName(HUB_MAP_NAME));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] World was nullptr"));
+    }
 }
 
 void USteamSessionSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
+    // Firstly, trigger all client logic
     OnCreateSessionCompleteDelegate.Broadcast(bWasSuccessful);
+
+    // Then, do several validation checks and start a level transition
+    if (!bWasSuccessful)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Failed to create a session"));
+        return;
+    }
+
+    FNamedOnlineSession* Session = SessionInterface->GetNamedSession(NAME_GameSession);
+    if (!Session)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Failed to retrieve session data"));
+        return;
+    }
+
+    FString LobbyMapPath;
+    const bool DidFindMapName = Session->SessionSettings.Get<FString>(SETTING_CUSTOM, LobbyMapPath);
+    if (!DidFindMapName)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Didn't find a map name in the session settings"));
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (World)
+    {
+        World->ServerTravel(LobbyMapPath + "?listen");
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] World was nullptr"));
+    }
 }
 
 TArray<FSessionPlayerInfo> USteamSessionSubsystem::GetSessionPlayers()
