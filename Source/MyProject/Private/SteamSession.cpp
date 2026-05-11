@@ -122,12 +122,40 @@ void USteamSessionSubsystem::JoinSteamLobby(int32 ListIndex)
 void USteamSessionSubsystem::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
 {
     const bool WasSuccessful = Result == EOnJoinSessionCompleteResult::Success;
+    OnJoinSessionCompleteDelegate.Broadcast(WasSuccessful);
+
     if (!WasSuccessful)
     {
-        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Local player was nullptr"));
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Failed to join a session"));
+        return;
     }
 
-    OnJoinSessionCompleteDelegate.Broadcast(WasSuccessful);
+    if (!SessionInterface.IsValid()) return;
+
+    FString ConnectString;
+    const bool DidResolveString = SessionInterface->GetResolvedConnectString(NAME_GameSession, ConnectString);
+    if (!DidResolveString)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Failed to resolve connect string after session join attempt"));
+        return;
+    }
+
+    UWorld* World = GetWorld();
+    if (!World)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] World was nullptr"));
+        return;
+    }
+
+    APlayerController* PC = GetWorld()->GetFirstPlayerController();
+    if (PC)
+    {
+        PC->ClientTravel(ConnectString, TRAVEL_Absolute);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Player controller was nullptr"));
+    }
 }
 
 void USteamSessionSubsystem::StartGameFromLobby()
