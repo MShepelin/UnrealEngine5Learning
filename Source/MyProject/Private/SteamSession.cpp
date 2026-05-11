@@ -121,16 +121,7 @@ void USteamSessionSubsystem::JoinSteamLobby(int32 ListIndex)
 void USteamSessionSubsystem::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
 {
     const bool WasSuccessful = Result == EOnJoinSessionCompleteResult::Success;
-    if (WasSuccessful)
-    {
-        /*APlayerController* PC = GetGameInstance()->GetFirstLocalPlayerController();
-        FString ConnectString;
-        if (SessionInterface->GetResolvedConnectString(SessionName, ConnectString))
-        {
-            PC->ClientTravel(ConnectString, ETravelType::TRAVEL_Absolute);
-        }*/
-    }
-    else
+    if (!WasSuccessful)
     {
         UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Local player was nullptr"));
     }
@@ -145,11 +136,6 @@ void USteamSessionSubsystem::StartGameFromLobby()
     if (!Session)
     {
         UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Tried to call StartGameFromLobby when no session was created"));
-        return;
-    }
-    if (!Session->bHosting)
-    {
-        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Tried to call StartGameFromLobby from a client that is not a host"));
         return;
     }
 
@@ -187,18 +173,6 @@ void USteamSessionSubsystem::OnDestroySessionComplete(FName SessionName, bool bW
 void USteamSessionSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
     OnCreateSessionCompleteDelegate.Broadcast(bWasSuccessful);
-}
-
-bool USteamSessionSubsystem::IsLobbyHost()
-{
-    FNamedOnlineSession* Session = SessionInterface->GetNamedSession(NAME_GameSession);
-    if (!Session)
-    {
-        UE_LOG(LogTemp, Error, TEXT("[USteamSessionSubsystem] Tried to call IsLobbyHost when no session was created or joined"));
-        return false;
-    }
-
-    return Session->bHosting;
 }
 
 TArray<FSessionPlayerInfo> USteamSessionSubsystem::GetSessionPlayers()

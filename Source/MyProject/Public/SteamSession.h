@@ -56,9 +56,6 @@ public:
     void StartGameFromLobby();
 
     UFUNCTION(BlueprintCallable)
-    bool IsLobbyHost();
-
-    UFUNCTION(BlueprintCallable)
     TArray<FSessionPlayerInfo> GetSessionPlayers();
 
     // Delegates for Blueprint UI
