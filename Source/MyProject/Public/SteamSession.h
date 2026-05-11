@@ -56,6 +56,9 @@ public:
     void StartGameFromLobby();
 
     UFUNCTION(BlueprintCallable)
+    void CleanupSession();
+
+    UFUNCTION(BlueprintCallable)
     TArray<FSessionPlayerInfo> GetSessionPlayers();
 
     // Delegates for Blueprint UI

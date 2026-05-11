@@ -307,3 +307,11 @@ TArray<FSessionPlayerInfo> USteamSessionSubsystem::GetSessionPlayers()
 
     return Result;
 }
+
+void USteamSessionSubsystem::CleanupSession()
+{
+    if (SessionInterface.IsValid())
+    {
+        SessionInterface->DestroySession(NAME_GameSession);
+    }
+}
